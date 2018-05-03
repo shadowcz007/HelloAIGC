@@ -14,11 +14,12 @@
         position: fixed;
         bottom: 12px;
         z-index: 99;
-
-        color: rgba(0, 0, 0, 0.8);
+        color: #252525;
+        font-weight: 600;
         font-size: 15px;
         padding: 12px;
         display: flex;
+        flex-direction: column;
     }
 
     .logo img {
@@ -79,30 +80,29 @@
         <a-assets>
             <img id="cover">
             <img id="cover_small">
-
-
-
         </a-assets>
 
-        <a-entity shadow="receive: true" geometry="primitive: box" light="type: point; intensity: 2.0" camera look-controls="enabled:false;touchEnabled:true">
+        <a-entity shadow="receive: true" geometry="primitive: box" light="type: point; intensity: 1.1" camera look-controls="enabled:false;touchEnabled:true">
 
-            <a-box position="0 0.6 -3.4" rotation="0 30 0" color="#ffffff" depth="0.4" height="3.5" width="2" id="bookCover">
-                <a-box position="-1.005 0 0" rotation="0 0 0" color="#4a4a4a" depth="0.4" height="3.5" width="0.01" id="bookCover_small"></a-box>
+            <a-box position="0 0.6 -3.4" rotation="0 30 0" color="#ffffff" depth="0.4" height="3.5" width="2.3" id="bookCover">
+                <a-box position="-1.148 0 0" rotation="0 0 0" color="#4a4a4a" depth="0.4" height="3.5" width="0.01" id="bookCover_small"></a-box>
             </a-box>
             <!--
             <a-box position="-1.81 2 -5.4" rotation="0 -45 0" color="#4a4a4a" depth="0.01" height="4" width="0.7"></a-box>-->
-
+            
+            <a-entity light="type: point; intensity: 0.8; distance: 50; decay: 2" position="-4 4 -2.4"></a-entity>
 
         </a-entity>
 
-        <a-box color="#ECECEC" shadow="receive: true" position="0 -1.2 -4" rotation="0 45 0" depth="240" height="0.1" width="12"></a-box>
+        <a-box color="white" shadow="receive: false" position="0 -1.2 -4" rotation="0 45 0" depth="1240" height="0.1" width="12"></a-box>
 
         <a-sky color="#ECECEC"></a-sky>
     </a-scene>
 
     <div class="logo" style="display: none">
-        <img src="./code.jpg" alt="">
-        <div id="txt"></div>
+        <div style="display:flex;"><img src="./code.jpg" alt="">
+            <div id="txt"></div></div>
+        <div style="font-size:12px;font-weight: 400;color:rgba(0, 0, 0, 0.8)">长按二维码制作属于你的人工智能书</div>
         <!--<button onclick="save();">SAVE</button>-->
     </div>
     <script>
@@ -123,7 +123,9 @@
             document.querySelector('a-scene').style.display = "block";
             document.querySelector('#user').style.display = "none";
             document.querySelector('.logo').style.display="flex";
-            run();
+           
+            setTimeout(run,500);
+             
         };
 
 
@@ -135,8 +137,13 @@
                 ["#394A51", "#7FA99B"],
                 ["#22559C", "#F27370"],
                 ["#FF6D24", "#4E413B"],
-                ["#F7F2C1", '#F0CA6D'],
-                ["#A13939", "#E75151"]
+                ["#F0CA6D", '#F7F2C1'],
+                ["#A13939", "#E75151"],
+                ["#657DC4","#838ED9"],
+                ["#461B93","#6A3CBC"],
+                ["#4A3333","#98D083"],
+                ["#AD1457","#F06292"],
+                ["#18587A","#FC624D"]
             ];
             var index = Math.abs(Math.ceil(Math.random() * colors.length - 1));
             return colors[index]
@@ -543,16 +550,13 @@
 
             txt.innerText = words.text + ' ' + words.from;
 
-
-
-
             //console.log(words)
         }
 
 
         function initCover() {
             var canvas = document.createElement('canvas');
-            canvas.width = 400;
+            canvas.width = 500;
             canvas.height = 700;
 
             var color = "rgba(0,0,0,0.8)";
@@ -560,13 +564,15 @@
             var grids = getGrid(canvas.width, canvas.height);
 
             var ctx = canvas.getContext('2d');
+            ctx.fillStyle="white";
 
+            ctx.fillRect(0,0,canvas.width,canvas.height);
 
 
             for (var index = 0; index < grids.length; index++) {
                 var p = grids[index];
-
-                ctx.fillRect(p.x, p.y, 2, 2);
+                ctx.fillStyle="rgba(0,0,0,0.8)";
+                ctx.fillRect(p.x, p.y, 4, 4);
 
             };
 
@@ -602,25 +608,24 @@
 
             //
 
+            ctx.fillStyle ='rgba(255,255,255,0.7)';
+            
+            ctx.fillRect(0,0,canvas.width,384);
 
 
+            ctx.font = "bold 48px sans-serif";
 
-            ctx.font = "bold 40px sans-serif";
-
-            ctx.fillStyle = color;
-            var tw = ctx.measureText(t.text.zh).width;
-
-
-
-
-
+           
+            ctx.fillStyle =color;
             ctx.strokeStyle = "#ffffff";
             ctx.lineWidth = 4;
             ctx.strokeText(t.text.zh, 50, 128);
             ctx.fillText(t.text.zh, 50, 128);
 
 
-            ctx.font = "bold 20px sans-serif";
+            
+
+            ctx.font = "bold 28px sans-serif";
             ctx.fillStyle = color;
             ctx.strokeStyle = "#ffffff";
             ctx.lineWidth = 4;
@@ -628,7 +633,7 @@
             ctx.fillText('( ' + l + ' )', 50, 180);
 
 
-            ctx.font = "bold 24px sans-serif";
+            ctx.font = "bold 30px sans-serif";
             ctx.fillStyle = c[0];
             ctx.strokeStyle = "#ffffff";
             ctx.lineWidth = 1;
@@ -642,7 +647,11 @@
 
             ctx.fillRect(50, canvas.height - 80, 10, 10);
 
-            ctx.font = "bold 14px sans-serif";
+            ctx.fillStyle ='rgba(255,255,255,0.7)';
+            ctx.fillRect(0,canvas.height-90,canvas.width,384);
+
+
+            ctx.font = "bold 16px sans-serif";
             ctx.fillStyle = 'black';
             ctx.textBaseline = "hanging";
 
@@ -652,13 +661,21 @@
 
 
             ctx.fillStyle = 'black';
-            ctx.font = "bold 16px sans-serif";
+            ctx.font = "bold 18px sans-serif";
             ctx.strokeStyle = "#ffffff";
             ctx.lineWidth = 4;
 
-            ctx.strokeText(name, 70, canvas.height - 40);
-            ctx.fillText(name, 70, canvas.height - 40);
+            
+            var tw2 = ctx.measureText(name).width;
+ 
 
+            ctx.fillStyle ='black';
+            ctx.strokeText(name,70, canvas.height - 40);
+            ctx.fillText(name,70, canvas.height - 40);
+
+            ctx.fillStyle =c[0];
+            ctx.fillRect(0,canvas.height -35,tw2-20,10);
+            ctx.fillRect(90+tw2,canvas.height -35,canvas.width,10);
 
             var imgSrc = canvas.toDataURL();
             //alert(imgSrc)
@@ -685,6 +702,10 @@
             canvas.height = 700;
             var ctx = canvas.getContext('2d');
 
+            //ctx.fillStyle="white";
+
+            //ctx.fillRect(0,0,canvas.width,canvas.height);
+
             ctx.font = "30px Verdana";
             // 创建渐变
             var grd = ctx.createLinearGradient(0, 0, canvas.width, 0);
@@ -707,7 +728,7 @@
                 var tt = tts[index];
                 if (index >= t.texts.length) {
                     ctx.font = "bold 12px sans-serif";
-                    ctx.fillText(tt, 30, index * 18 + 350);
+                    ctx.fillText(tt, 30, index * 18 + 300);
                 } else {
                     ctx.font = "bold 20px sans-serif";
                     ctx.fillText(tt, 30, index * 24 + 50);
@@ -715,7 +736,8 @@
 
             };
 
-
+            ctx.fillStyle =c[0];
+            ctx.fillRect(0,canvas.height -35,300,10);
 
             var imgSrc = canvas.toDataURL();
             var img = document.querySelector('#cover_small');
