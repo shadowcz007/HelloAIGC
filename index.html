@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mixlab送你一本人工智能书</title>
+    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+</head>
+
+<style>
+    .logo {
+        position: fixed;
+        bottom:12px;
+        z-index: 99;
+       
+        color: white;
+        font-size: 15px;
+        padding: 12px;
+        display: flex;
+    }
+
+    .logo img {
+        width: 88px;
+        height: 88px;
+    }
+    #txt{
+        padding: 12px;
+    }
+</style>
+
+<body>
+
+    <a-scene fog="type: linear; color: black" vr-mode-ui="enabled: false" keyboard-shortcuts="enterVR: false">
+        <a-assets>
+            <img id="cover">
+            <img id="cover_small">
+
+
+
+        </a-assets>
+
+
+        <a-entity geometry="primitive: box" light="type: point; intensity: 2.0" camera look-controls="enabled:false;touchEnabled:true">
+
+            <a-box position="0 0.8 -4" rotation="0 30 0" color="#ffffff" depth="0.4" height="3.5" width="2" id="bookCover">
+                <a-box position="-1.005 0 0" rotation="0 0 0" color="#4a4a4a" depth="0.4" height="3.5" width="0.01" id="bookCover_small"></a-box>
+            </a-box>
+            <!--
+            <a-box position="-1.81 2 -5.4" rotation="0 -45 0" color="#4a4a4a" depth="0.01" height="4" width="0.7"></a-box>-->
+
+
+        </a-entity>
+
+
+        <a-sky color="#ECECEC"></a-sky>
+    </a-scene>
+
+    <div class="logo">
+        <img src="./code.jpg" alt="">
+        <div id="txt"></div>
+    </div>
+    <script>
+        var t = getTitle(),
+            l = getLevel(),
+            c = getColors();
+
+
+        var isDone = 0;
+
+
+        run();
+
+
+
+
+
+
+        function getColors() {
+            var colors = [
+                ["#240041", "#900048"],
+                ["#1C1124", "#684656"],
+                ["#394A51", "#7FA99B"],
+                ["#22559C", "#F27370"],
+                ["#FF6D24", "#4E413B"],
+                ["#F7F2C1", '#F0CA6D'],
+                ["#A13939", "#E75151"]
+            ];
+            var index = Math.abs(Math.ceil(Math.random() * colors.length - 1));
+            return colors[index]
+        }
+
+        function getTitle() {
+            var titles = [{
+                zh: "人工智能基础",
+                en: ['Fundamentals of', 'Artificial Intelligence']
+            }, {
+                zh: "机器视觉基础",
+                en: ['Fundamentals of', 'Machine Vision']
+            }, {
+                zh: "深度学习基础",
+                en: ['Fundamentals of', 'Deep Learning']
+            }, {
+                zh: "机器学习基础",
+                en: ['Fundamentals of', 'Machine Learning']
+            }, {
+                zh: "自然语言处理基础",
+                en: ['Fundamentals of', 'Natural Language Processing']
+            }];
+            var index = Math.abs(Math.ceil(Math.random() * titles.length - 1));
+            var title = {
+                texts: titles[index].zh.split(''),
+                text: titles[index]
+            };
+
+            return title;
+        };
+
+        function getLevel() {
+            var levels = ["学前教育版", "小学版", "初中版", "高中版"];
+            var index = Math.abs(Math.ceil(Math.random() * levels.length - 1));
+            return levels[index];
+        };
+
+
+        function getMyWords() {
+            var words = [{
+                "text": "幸福是可以通过学习来获得的，尽管它不是我们的母语。 ",
+                "from": "——韩寒",
+                "url": "http://www.juzimi.com/ju/723",
+                "id": "723",
+                "tag": "学习"
+            }, {
+                "text": "此刻打盹，你将做梦；  而此刻学习，你将圆梦。 ",
+                "from": "原创",
+                "url": "http://www.juzimi.com/ju/6897",
+                "id": "6897",
+                "tag": "学习"
+            }, {
+                "text": "无目的读书是散步而不是学习。 ",
+                "from": "——胡适",
+                "url": "http://www.juzimi.com/ju/9359",
+                "id": "9359",
+                "tag": "学习"
+            }, {
+                "text": "越学习，越发现自己的无知。 ",
+                "from": "——笛卡尔",
+                "url": "http://www.juzimi.com/ju/11801",
+                "id": "11801",
+                "tag": "学习"
+            }, {
+                "text": "如果学习只在于模仿，那么我们就不会有科学，也不会有技术。 ",
+                "from": "——高尔基",
+                "url": "http://www.juzimi.com/ju/14851",
+                "id": "14851",
+                "tag": "学习"
+            }, {
+                "text": "如果不想在世界上虚度一生，那就要学习一辈子。 ",
+                "from": "——高尔基",
+                "url": "http://www.juzimi.com/ju/16211",
+                "id": "16211",
+                "tag": "学习"
+            }, {
+                "text": "我活着是为学习，而学习并不是为活着。 ",
+                "from": "——培根",
+                "url": "http://www.juzimi.com/ju/23252",
+                "id": "23252",
+                "tag": "学习"
+            }, {
+                "text": "在任何情况下，你都要学习——以更换学习内容作为你的休息。 ",
+                "from": "——安·莫洛亚《大仲马传》",
+                "url": "http://www.juzimi.com/ju/35427",
+                "id": "35427",
+                "tag": "学习"
+            }, {
+                "text": "读书是学习，使用也是学习，而且是更重要的学习。 ",
+                "from": "——毛泽东",
+                "url": "http://www.juzimi.com/ju/47346",
+                "id": "47346",
+                "tag": "学习"
+            }, {
+                "text": "听不见喘息也就不知疲惫 看不清的终点也该要坚持。 ",
+                "from": "原创",
+                "url": "http://www.juzimi.com/ju/61527",
+                "id": "61527",
+                "tag": "学习"
+            }, {
+                "text": "平时的学习和经验，是我们在危急关头最有力的支持。 ",
+                "from": "——林肯",
+                "url": "http://www.juzimi.com/ju/73760",
+                "id": "73760",
+                "tag": "学习"
+            }, {
+                "text": "博学之，审问之，慎思之，明辨之，笃行之。 ",
+                "from": "《大戴礼记》",
+                "url": "http://www.juzimi.com/ju/101045",
+                "id": "101045",
+                "tag": "学习"
+            }, {
+                "text": "富贵必从勤苦得，男儿须读五车书。 ",
+                "from": "——杜甫《柏学士茅屋》",
+                "url": "http://www.juzimi.com/ju/120119",
+                "id": "120119",
+                "tag": "学习"
+            }, {
+                "text": "聪明在于学习，天才在于积累。 ",
+                "from": "——列宁",
+                "url": "http://www.juzimi.com/ju/176029",
+                "id": "176029",
+                "tag": "学习"
+            }, {
+                "text": "要学习向日葵，哪里有阳光就朝向哪里。 ",
+                "from": "《每天一张正能量》",
+                "url": "http://www.juzimi.com/ju/192896",
+                "id": "192896",
+                "tag": "学习"
+            }, {
+                "text": "什么时候，我连微笑也要学习。 ",
+                "from": "原创",
+                "url": "http://www.juzimi.com/ju/254071",
+                "id": "254071",
+                "tag": "学习"
+            }, {
+                "text": "当你的脾气大于出息，你就该去拼命学习。 ",
+                "from": "原创",
+                "url": "http://www.juzimi.com/ju/275806",
+                "id": "275806",
+                "tag": "学习"
+            }, {
+                "text": "把学习当学习，注定枯燥；把学习当成兴趣，注定有趣。 ",
+                "from": "原创",
+                "url": "http://www.juzimi.com/ju/380779",
+                "id": "380779",
+                "tag": "学习"
+            }, {
+                "text": "即使现在，对手也不停地翻动书页。 ",
+                "from": "《哈佛校训》",
+                "url": "http://www.juzimi.com/ju/385063",
+                "id": "385063",
+                "tag": "学习"
+            }, {
+                "text": "男孩子不学习做饭，会找不到女朋友的。 ",
+                "from": "——吴镇宇《爸爸去哪儿2》",
+                "url": "http://www.juzimi.com/ju/389941",
+                "id": "389941",
+                "tag": "学习"
+            }, {
+                "text": "原谅，是我们这一生都要学习的功课 ",
+                "from": "——张小娴《谢谢你离开我》",
+                "url": "http://www.juzimi.com/ju/421789",
+                "id": "421789",
+                "tag": "学习"
+            }, {
+                "text": "真的很想做一只小强，拥有两个大脑，一个学习，一个想你。 ",
+                "from": "原创",
+                "url": "http://www.juzimi.com/ju/486868",
+                "id": "486868",
+                "tag": "学习"
+            }, {
+                "text": "愚者向经验学习，贤者向历史学习。 ",
+                "from": "——宜野座伸元《心理测量者》",
+                "url": "http://www.juzimi.com/ju/570920",
+                "id": "570920",
+                "tag": "学习"
+            }, {
+                "text": "不好好学习怎么见TFBOYS？ ",
+                "from": "——TFBOYS",
+                "url": "http://www.juzimi.com/ju/624543",
+                "id": "624543",
+                "tag": "学习"
+            }, {
+                "text": "学习好的人连打架都这么有格调。 ",
+                "from": "——八月长安《最好的我们》",
+                "url": "http://www.juzimi.com/ju/744975",
+                "id": "744975",
+                "tag": "学习"
+            }, {
+                "text": "背生字，做习题，一天不得间断，因为学习语言，不进则退。 ",
+                "from": "——杨绛《杂忆与杂写》",
+                "url": "http://www.juzimi.com/ju/849440",
+                "id": "849440",
+                "tag": "学习"
+            }, {
+                "text": "我从来不让上学耽误我的学习。 ",
+                "from": "——马克·吐温",
+                "url": "http://www.juzimi.com/ju/859492",
+                "id": "859492",
+                "tag": "学习"
+            }, {
+                "text": "你不是不擅长学习，只是没有找到自己想要学习的东西而已。 ",
+                "from": "——东野圭吾《梦幻花》",
+                "url": "http://www.juzimi.com/ju/990846",
+                "id": "990846",
+                "tag": "学习"
+            }, {
+                "text": "学习是为了养成，不是致富。 ",
+                "from": "《三傻大闹宝莱坞》",
+                "url": "http://www.juzimi.com/ju/1107974",
+                "id": "1107974",
+                "tag": "学习"
+            }, {
+                "text": "想成为最优秀的人，就要向最优秀的人学习。 ",
+                "from": "——巴菲特",
+                "url": "http://www.juzimi.com/ju/1215931",
+                "id": "1215931",
+                "tag": "学习"
+            }, {
+                "text": "“一切研究，一切学习都只不过是回忆罢了。” ",
+                "from": "——柏拉图《美诺篇》",
+                "url": "http://www.juzimi.com/ju/1435208",
+                "id": "1435208",
+                "tag": "学习"
+            }, {
+                "text": "我们为什么会跌倒呢？这样我们才能学习怎么站起来。 ",
+                "from": "《蝙蝠侠：开战时刻》",
+                "url": "http://www.juzimi.com/ju/1514754",
+                "id": "1514754",
+                "tag": "学习"
+            }, {
+                "text": "只要还在学习，人生就有无穷的可能。 ",
+                "from": "《女王的教室》",
+                "url": "http://www.juzimi.com/ju/1616776",
+                "id": "1616776",
+                "tag": "学习"
+            }, {
+                "text": "加紧学习，抓住中心，宁精勿杂，宁专勿多。 ",
+                "from": "——周恩来",
+                "url": "http://www.juzimi.com/ju/1638108",
+                "id": "1638108",
+                "tag": "学习"
+            }, {
+                "text": "好好学习，安心学习 ",
+                "from": "原创",
+                "url": "http://www.juzimi.com/ju/1746545",
+                "id": "1746545",
+                "tag": "学习"
+            }, {
+                "text": "没有脑子却要学习 一个大写的身残志坚 ",
+                "from": "原创",
+                "url": "http://www.juzimi.com/ju/1874200",
+                "id": "1874200",
+                "tag": "学习"
+            }, {
+                "text": "学习哲学的目的，是使人成为人，而不是使人成为某种人。 ",
+                "from": "——冯友兰《中国哲学简史》",
+                "url": "http://www.juzimi.com/ju/2030975",
+                "id": "2030975",
+                "tag": "学习"
+            }, {
+                "text": "一个人学到的最重要的东西是学习的方法。 ",
+                "from": "——尼尔·波兹曼《娱乐至死》",
+                "url": "http://www.juzimi.com/ju/2117796",
+                "id": "2117796",
+                "tag": "学习"
+            }, {
+                "text": "我不能改变过去，但我能向过去学习 ",
+                "from": "《爱丽丝漫游仙境：镜中奇遇记》",
+                "url": "http://www.juzimi.com/ju/2127253",
+                "id": "2127253",
+                "tag": "学习"
+            }, {
+                "text": "忙完秋收忙秋种，学习，学习，再学习。 ",
+                "from": "——哈佛大学格言",
+                "url": "http://www.juzimi.com/ju/2344632",
+                "id": "2344632",
+                "tag": "学习"
+            }, {
+                "text": "学习等于接受，学习等于感受，学习等于承受，学习是受 ",
+                "from": "原创",
+                "url": "http://www.juzimi.com/ju/2565447",
+                "id": "2565447",
+                "tag": "学习"
+            }, {
+                "text": "当你的才华还撑不上你的野心时，你应该就去静心去学习 ",
+                "from": "原创",
+                "url": "http://www.juzimi.com/ju/2682793",
+                "id": "2682793",
+                "tag": "学习"
+            }, {
+                "text": "我爱学习 学习使我快乐  我爱学习 学习使我冷静 ",
+                "from": "原创",
+                "url": "http://www.juzimi.com/ju/2806212",
+                "id": "2806212",
+                "tag": "学习"
+            }, {
+                "text": "人如果停止了学习，就开始走向失败。 ",
+                "from": "——马云",
+                "url": "http://www.juzimi.com/ju/2807817",
+                "id": "2807817",
+                "tag": "学习"
+            }, {
+                "text": "我和你在一起的有限时间里，我希望向你学习学习学习。 ",
+                "from": "原创",
+                "url": "http://www.juzimi.com/ju/3054382",
+                "id": "3054382",
+                "tag": "学习"
+            }, {
+                "text": "哪有什么烦心事  一定是你不认真学习又想太多 ",
+                "from": "原创",
+                "url": "http://www.juzimi.com/ju/3180285",
+                "id": "3180285",
+                "tag": "学习"
+            }, {
+                "text": "我不爱学习  只是比较喜欢  那个认真努力的自己 ",
+                "from": "原创",
+                "url": "http://www.juzimi.com/ju/3259089",
+                "id": "3259089",
+                "tag": "学习"
+            }, {
+                "text": "以学习为乐，以学习为贵，以学习为荣。 ",
+                "from": "原创",
+                "url": "http://www.juzimi.com/ju/3676496",
+                "id": "3676496",
+                "tag": "学习"
+            }, {
+                "text": "“为什么要学习？”  “学习累两年，不学习累一辈子” ",
+                "from": "原创",
+                "url": "http://www.juzimi.com/ju/3848723",
+                "id": "3848723",
+                "tag": "学习"
+            }, {
+                "text": "我不想努力，却又不允许自己堕落。 ",
+                "from": "原创",
+                "url": "http://www.juzimi.com/ju/3978054",
+                "id": "3978054",
+                "tag": "学习"
+            }, {
+                "text": "学习，学习，再学习！学，然后知不足。 ",
+                "from": "——列宁",
+                "url": "http://www.juzimi.com/ju/4034175",
+                "id": "4034175",
+                "tag": "学习"
+            }];
+            var index = Math.abs(Math.ceil(Math.random() * words.length - 1));
+            return words[index];
+        };
+
+
+        function getGrid(w, h) {
+            var ln = 10;
+            var ps = [];
+            for (var index = 0; index < ln; index++) {
+                var x = w / ln * (index + 1);
+
+                for (var j = 0; j < ln; j++) {
+
+                    var y = h / ln * (j + 1);
+                    ps.push({
+                        x: x,
+                        y: y
+                    })
+
+                }
+
+            };
+
+            return ps
+        };
+
+
+
+
+
+
+
+        function run() {
+            initCover();
+            initCover_small();
+
+            initMy();
+        };
+
+
+        function initMy() {
+            var words = getMyWords();
+
+            var txt = document.querySelector('#txt');
+            if (words.from == '原创') {
+                words.from = '';
+            };
+
+            txt.innerText = words.text + ' ' + words.from;
+
+
+
+
+            //console.log(words)
+        }
+
+
+        function initCover() {
+            var canvas = document.createElement('canvas');
+            canvas.width = 400;
+            canvas.height = 700;
+
+            var color = "rgba(0,0,0,0.8)";
+
+            var grids = getGrid(canvas.width, canvas.height);
+
+            var ctx = canvas.getContext('2d');
+
+
+
+            for (var index = 0; index < grids.length; index++) {
+                var p = grids[index];
+
+                ctx.fillRect(p.x, p.y, 2, 2);
+
+            };
+
+
+
+            ctx.strokeStyle = "rgba(0,0,0,0.2)";
+            ctx.beginPath();
+            ctx.moveTo(grids[randomRangeInt(0, 10)].x, grids[randomRangeInt(0, 10)].y);
+            ctx.lineTo(grids[grids.length - randomRangeInt(1, 10)].x, grids[grids.length - randomRangeInt(1, 10)].y);
+            ctx.closePath();
+            ctx.stroke();
+
+
+            for (var index = 0; index < 8; index++) {
+                var _a = randomStandardNormal();
+                var _x = Math.abs(_a[0] * canvas.width * 0.8);
+                var _y = _a[1] * canvas.height * 2;
+                if (_y > 220 && _y < 360) {
+                    _y = _y + 200;
+                };
+
+                if (_y > 0 && _y < 140) {
+                    _y = _y - 90;
+                };
+                // console.log(_x,_y)
+                var pattern = createPattern(c);
+
+                var size = (80 + (150 * _a[0])) < 50 ? (Math.random() > 0.35 ? 280 : 50) : (80 + (150 * _a[0]));
+
+                ctx.drawImage(pattern, _x, _y, size, size);
+            };
+
+
+            //
+
+            ctx.font = "bold 40px sans-serif";
+
+            ctx.fillStyle = color;
+            var tw = ctx.measureText(t.text.zh).width;
+
+            ctx.strokeStyle = "#ffffff";
+            ctx.lineWidth = 4;
+            ctx.strokeText(t.text.zh, 50, 128);
+            ctx.fillText(t.text.zh, 50, 128);
+
+
+            ctx.font = "bold 20px sans-serif";
+            ctx.fillStyle = color;
+            ctx.strokeStyle = "#ffffff";
+            ctx.lineWidth = 4;
+            ctx.strokeText('( ' + l + ' )', 50, 180);
+            ctx.fillText('( ' + l + ' )', 50, 180);
+
+
+            ctx.font = "bold 24px sans-serif";
+            ctx.fillStyle = c[0];
+            ctx.strokeStyle = "#ffffff";
+            ctx.lineWidth = 1;
+
+            ctx.strokeText(t.text.en[0], 50, 320);
+            ctx.strokeText(t.text.en[1], 50, 360);
+
+            ctx.fillText(t.text.en[0], 50, 320);
+            ctx.fillText(t.text.en[1], 50, 360);
+
+
+            ctx.fillRect(50, canvas.height - 80, 10, 10);
+
+            ctx.font = "bold 14px sans-serif";
+            ctx.fillStyle = 'black';
+            ctx.textBaseline = "hanging";
+
+
+            ctx.fillText('人工智能+设计修炼指南', 70, canvas.height - 80);
+            ctx.fillText('科技Mix设计Lab', 70, canvas.height - 60);
+
+
+
+            var imgSrc = canvas.toDataURL();
+            //alert(imgSrc)
+            var img = document.querySelector('#cover');
+
+            img.src = imgSrc;
+
+            img.onload = function () {
+                console.log('done');
+
+                document.querySelector('#bookCover').setAttribute('src', '#cover');
+                isDone = isDone + 1;
+                //   document.body.innerHTML='';
+                //  document.body.appendChild(img)
+            };
+
+
+
+        };
+
+        function initCover_small() {
+            var canvas = document.createElement('canvas');
+            canvas.width = 80;
+            canvas.height = 700;
+            var ctx = canvas.getContext('2d');
+
+            ctx.font = "30px Verdana";
+            // 创建渐变
+            var grd = ctx.createLinearGradient(0, 0, canvas.width, 0);
+            grd.addColorStop(1, "rgba(0,0,0,0.05)");
+            grd.addColorStop(0, "white");
+
+            ctx.fillStyle = 'rgba(0,0,0,0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+
+            ctx.font = "bold 20px sans-serif";
+            ctx.fillStyle = 'black';
+            ctx.textBaseline = "hanging";
+
+            var tts = t.texts.concat('人工智能+设计修炼指南'.split(''));
+
+
+
+            for (var index = 0; index < tts.length; index++) {
+                var tt = tts[index];
+                if (index >= t.texts.length) {
+                    ctx.font = "bold 12px sans-serif";
+                    ctx.fillText(tt, 30, index * 18 + 350);
+                } else {
+                    ctx.font = "bold 20px sans-serif";
+                    ctx.fillText(tt, 30, index * 24 + 50);
+                }
+
+            };
+
+
+
+            var imgSrc = canvas.toDataURL();
+            var img = document.querySelector('#cover_small');
+
+            img.src = imgSrc;
+
+            img.onload = function () {
+                console.log('done')
+                document.querySelector('#bookCover_small').setAttribute('src', '#cover_small')
+                isDone = isDone + 1;
+
+                /* if (isDone >= 2) {
+                     var base64 = document.querySelector('.a-canvas').toDataURL();
+                     var img = new Image();
+                     img.src = base64;
+                     img.onload = function () {
+                         document.body.appendChild(img)
+                     }
+                 };
+                 */
+                //document.body.appendChild(canvas)
+            };
+        };
+
+
+        function createPattern(colors) {
+            var canvas = document.createElement('canvas');
+            canvas.width = 150;
+            canvas.height = 150;
+            var ctx = canvas.getContext('2d');
+
+            // ctx.strokeRect(0,0,canvas.width,canvas.height);
+            // ctx.rotate(randomRangeInt(0,40)*Math.PI/180);
+
+            var vertices = Math.random() > 0.45 ? 5 : 6;
+
+            var pattern1 = create(colors, true, vertices);
+            ctx.drawImage(pattern1, 0, 0, 150, 150);
+            var pattern2 = create(colors, false, vertices);
+            ctx.drawImage(pattern2, 10, 10, 120, 120);
+            return canvas
+        };
+
+
+
+        function create(colors, isStroke, vertices) {
+            var canvas = document.createElement('canvas'),
+                ctx = canvas.getContext('2d');
+
+
+            // 定义边长、边数、canvas大小  
+            var length = 100,
+                size = 500;
+            canvas.width = size;
+            canvas.height = size;
+
+            var getDegree = function (vertices, index) {
+                return 360 / vertices * (i + 0.5) + 90;
+            }
+
+            var getRadian = function (degree) {
+                return degree * Math.PI / 180;
+            };
+
+
+
+            ctx.beginPath();
+            for (var i = 0; i < vertices; i++) {
+                // 计算偏转  
+                var degree = getDegree(vertices, i),
+                    radian = getRadian(degree);
+
+                // 增加1/3的canvas大小位移量以免被边缘挡住  
+                var x = Math.cos(radian) * length + size / 3;
+                var y = Math.sin(radian) * length + size / 3;
+                ctx.lineTo(x, y);
+            }
+            ctx.closePath();
+
+
+            if (isStroke) {
+                ctx.strokeStyle = colors[1];
+                ctx.lineWidth = 10;
+                ctx.stroke();
+            } else {
+                ctx.fillStyle = colors[0];
+                ctx.fill();
+            };
+
+
+            return canvas
+        }
+
+
+
+
+        //如何生成指定分布的随机数
+
+        function randomRange(min, max) {
+            return Math.random() * (max - min) + min;
+        };
+
+        function randomRangeInt(min, max) {
+            return Math.round(Math.random() * (max - min)) + min;
+        };
+
+
+        //正态分布
+        function mathNormal(x, mu, sigma) {
+            mu = mu || 0;
+            sigma = sigma || 1;
+            var res = (1 / (Math.sqrt(2 * Math.PI) * sigma)) * (Math.exp(-Math.pow(x - mu, 2) / (2 * Math.pow(sigma, 2))));
+            return res
+        };
+
+        function randomStandardNormal() {
+            var isTarget = false,
+                res;
+            while (!isTarget) {
+                var a = randomRange(-1, 1);
+                var b = randomRange(0, 1);
+                if (b <= mathNormal(a)) {
+                    isTarget = true;
+                    res = [a, b]
+                };
+            };
+
+            return res;
+
+        };
+    </script>
+</body>
+
+</html>
