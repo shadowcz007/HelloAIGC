@@ -40,7 +40,7 @@
         z-index: 99;
         background: #eee;
         padding: 24px;
-        padding-top: 120px;
+        padding-top: 72px;
         height: 100vh;
         display: flex;
     flex-direction: column;
@@ -52,8 +52,8 @@
         margin-top: 24px;
         font-size: 24px;
         padding: 24px;
-        width: 240px;
-
+        width: 228px;
+        border:none;
     }
     
 </style>
@@ -74,6 +74,8 @@
         border: none;
         font-size: 18px;">生 成</button>
 
+        <div style="font-size: 10px;margin-top: 8px;">生成后，移动手机寻找属于你的AI书籍</div>
+
     </div>
 
     <a-scene fog="type: linear; color:#eee" vr-mode-ui="enabled: false" keyboard-shortcuts="enterVR: false" style="display:none">
@@ -81,28 +83,32 @@
             <img id="cover">
             <img id="cover_small">
         </a-assets>
+        <a-entity position="0 0 0" camera="active:true;fov:45" look-controls="enabled:true;">
+            </a-entity>
+                <a-entity shadow="receive: true" geometry="primitive: box" light="type: point; intensity: 1.1" >
 
-        <a-entity shadow="receive: true" geometry="primitive: box" light="type: point; intensity: 1.1" camera look-controls="enabled:false;touchEnabled:true">
-
-            <a-box position="0 0.6 -3.6" rotation="0 26 0" color="#ffffff" depth="0.4" height="3.5" width="2.3" id="bookCover">
-                <a-box position="-1.148 0 0" rotation="0 0 0" color="#4a4a4a" depth="0.4" height="3.5" width="0.01" id="bookCover_small"></a-box>
-            </a-box>
-            <!--
-            <a-box position="-1.81 2 -5.4" rotation="0 -45 0" color="#4a4a4a" depth="0.01" height="4" width="0.7"></a-box>-->
+                        <a-box position="0 0.6 -6.6" rotation="0 26 0" color="#ffffff" depth="0.4" height="3.5" width="2.3" id="bookCover">
+                            <a-box position="-1.148 0 0" rotation="0 0 0" color="#4a4a4a" depth="0.4" height="3.5" width="0.01" id="bookCover_small"></a-box>
+                        </a-box>
+                        <!--
+                        <a-box position="-1.81 2 -5.4" rotation="0 -45 0" color="#4a4a4a" depth="0.01" height="4" width="0.7"></a-box>-->
+                        
+                        <a-entity light="type: point; intensity: 0.8; distance: 50; decay: 2" position="-4 4 -2.4"></a-entity>
             
-            <a-entity light="type: point; intensity: 0.8; distance: 50; decay: 2" position="-4 4 -2.4"></a-entity>
+                    </a-entity>
+            
+                    <a-box color="white" shadow="receive: false" position="0 -1.2 -4" rotation="0 45 0" depth="1240" height="0.1" width="1200"></a-box>
+            
+                    <a-sky color="#ECECEC"></a-sky>
+      
 
-        </a-entity>
-
-        <a-box color="white" shadow="receive: false" position="0 -1.2 -4" rotation="0 45 0" depth="1240" height="0.1" width="12"></a-box>
-
-        <a-sky color="#ECECEC"></a-sky>
+        
     </a-scene>
 
     <div class="logo" style="display: none">
         <div style="display:flex;"><img src="./code.jpg" alt="">
             <div id="txt"></div></div>
-        <div style="font-size:12px;font-weight: 400;color:rgba(0, 0, 0, 0.8)">长按二维码制作属于你的人工智能书</div>
+        <div style="font-size:12px;font-weight: 400;color:rgba(0, 0, 0, 0.8)">移动手机寻找AI书籍，长按二维码制作你的AI书籍</div>
         <!--<button onclick="save();">SAVE</button>-->
     </div>
     <script>
