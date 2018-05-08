@@ -35,7 +35,7 @@
 
     #user {
         position: fixed;
-        top:0;
+        top: 0;
         width: 100%;
         z-index: 99;
         background: #eee;
@@ -43,7 +43,7 @@
         padding-top: 72px;
         height: 100vh;
         display: flex;
-    flex-direction: column;
+        flex-direction: column;
     }
 
     input {
@@ -53,9 +53,16 @@
         font-size: 24px;
         padding: 24px;
         width: 228px;
-        border:none;
+        border: none;
     }
-    
+
+    .save_btn {
+        height: 44px;
+        background: black;
+        color: white;
+        font-size: 18px;
+        margin-top: 24px;
+    }
 </style>
 
 <body>
@@ -74,7 +81,7 @@
         border: none;
         font-size: 18px;">生 成</button>
 
-        <div style="font-size: 10px;margin-top: 8px;">生成后，移动手机寻找属于你的AI书籍</div>
+        <!--<div style="font-size: 10px;margin-top: 8px;">生成后，移动手机寻找属于你的AI书籍</div>-->
 
     </div>
 
@@ -83,33 +90,37 @@
             <img id="cover">
             <img id="cover_small">
         </a-assets>
-        <a-entity position="0 0 0" camera="active:true;fov:45" look-controls="enabled:true;">
-            </a-entity>
-                <a-entity shadow="receive: true" geometry="primitive: box" light="type: point; intensity: 1.1" >
+        <a-entity position="0 0 0" camera="active:true;fov:45" look-controls="enabled:false;">
+        </a-entity>
+        <a-entity shadow="receive: true" geometry="primitive: box" light="type: point; intensity: 1.1">
 
-                        <a-box position="0 0.6 -6.6" rotation="0 26 0" color="#ffffff" depth="0.4" height="3.5" width="2.3" id="bookCover">
-                            <a-box position="-1.148 0 0" rotation="0 0 0" color="#4a4a4a" depth="0.4" height="3.5" width="0.01" id="bookCover_small"></a-box>
-                        </a-box>
-                        <!--
+            <a-box position="0 0.6 -6.6" rotation="0 26 0" color="#ffffff" depth="0.4" height="3.5" width="2.3" id="bookCover">
+                <a-box position="-1.148 0 0" rotation="0 0 0" color="#4a4a4a" depth="0.4" height="3.5" width="0.01" id="bookCover_small"></a-box>
+            </a-box>
+            <!--
                         <a-box position="-1.81 2 -5.4" rotation="0 -45 0" color="#4a4a4a" depth="0.01" height="4" width="0.7"></a-box>-->
-                        
-                        <a-entity light="type: point; intensity: 0.8; distance: 50; decay: 2" position="-4 4 -2.4"></a-entity>
-            
-                    </a-entity>
-            
-                    <a-box color="white" shadow="receive: false" position="0 -1.2 -4" rotation="0 45 0" depth="1240" height="0.1" width="1200"></a-box>
-            
-                    <a-sky color="#ECECEC"></a-sky>
-      
 
-        
+            <a-entity light="type: point; intensity: 0.8; distance: 50; decay: 2" position="-4 4 -2.4"></a-entity>
+
+        </a-entity>
+
+        <a-box color="white" shadow="receive: false" position="0 -1.2 -4" rotation="0 45 0" depth="1240" height="0.1" width="1200"></a-box>
+
+        <a-sky color="#ECECEC"></a-sky>
+
+
+
     </a-scene>
 
     <div class="logo" style="display: none">
-        <div style="display:flex;"><img src="./code.jpg" alt="">
-            <div id="txt"></div></div>
-        <div style="font-size:12px;font-weight: 400;color:rgba(0, 0, 0, 0.8)">移动手机寻找AI书籍，长按二维码制作你的AI书籍</div>
-        <!--<button onclick="save();">SAVE</button>-->
+        <div style="display:flex;">
+            <img src="./code.jpg" alt="" id="logo">
+            <div id="txt"></div>
+        </div>
+
+        <div style="font-size:12px;font-weight: 400;color:rgba(0, 0, 0, 0.8)">长按二维码制作你的AI书籍</div>
+
+        <button onclick="save();" class="save_btn">SAVE</button>
     </div>
     <script>
         var t = getTitle(),
@@ -125,13 +136,13 @@
 
 
         function start() {
-            name = (document.querySelector('input').value||'mixlab') + ' 著';
+            name = (document.querySelector('input').value || 'mixlab') + ' 著';
             document.querySelector('a-scene').style.display = "block";
             document.querySelector('#user').style.display = "none";
-            document.querySelector('.logo').style.display="flex";
-           
-            setTimeout(run,500);
-             
+            document.querySelector('.logo').style.display = "flex";
+
+            setTimeout(run, 500);
+
         };
 
 
@@ -145,11 +156,11 @@
                 ["#FF6D24", "#4E413B"],
                 ["#F0CA6D", '#F7F2C1'],
                 ["#A13939", "#E75151"],
-                ["#657DC4","#838ED9"],
-                ["#461B93","#6A3CBC"],
-                ["#4A3333","#98D083"],
-                ["#AD1457","#F06292"],
-                ["#18587A","#FC624D"]
+                ["#657DC4", "#838ED9"],
+                ["#461B93", "#6A3CBC"],
+                ["#4A3333", "#98D083"],
+                ["#AD1457", "#F06292"],
+                ["#18587A", "#FC624D"]
             ];
             var index = Math.abs(Math.ceil(Math.random() * colors.length - 1));
             return colors[index]
@@ -539,10 +550,41 @@
         function save() {
             var s = document.querySelector('a-scene').components.screenshot
             s.data.height = window.innerHeight;
-
             s.data.width = window.innerWidth;
 
-            s.capture('perspective');
+            var c=s.getCanvas('perspective');
+           
+
+            var cc=document.createElement('canvas');
+            var nc=cc.getContext('2d');
+            cc.width= window.innerWidth;
+            cc.height=window.innerHeight;
+
+            nc.drawImage(c,0,0);
+
+            nc.drawImage(c,0,0);
+
+
+            var logo=document.querySelector('#logo');
+
+            var size=window.innerWidth*0.25;
+            var y=window.innerHeight-size-10;
+
+            nc.drawImage(logo,10,y, window.innerWidth*0.25, window.innerWidth*0.25);  
+            
+            var base64=cc.toDataURL('image/png');
+
+            var img=document.createElement('img');
+
+
+
+            img.onload=function(){
+                document.body.innerHTML='';
+            document.body.appendChild(img);
+            }
+            img.src=base64;
+
+           // s.capture('perspective');
         }
 
 
@@ -570,14 +612,14 @@
             var grids = getGrid(canvas.width, canvas.height);
 
             var ctx = canvas.getContext('2d');
-            ctx.fillStyle="white";
+            ctx.fillStyle = "white";
 
-            ctx.fillRect(0,0,canvas.width,canvas.height);
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 
             for (var index = 0; index < grids.length; index++) {
                 var p = grids[index];
-                ctx.fillStyle="rgba(0,0,0,0.8)";
+                ctx.fillStyle = "rgba(0,0,0,0.8)";
                 ctx.fillRect(p.x, p.y, 4, 4);
 
             };
@@ -614,22 +656,22 @@
 
             //
 
-            ctx.fillStyle ='rgba(255,255,255,0.7)';
-            
-            ctx.fillRect(0,0,canvas.width,384);
+            ctx.fillStyle = 'rgba(255,255,255,0.7)';
+
+            ctx.fillRect(0, 0, canvas.width, 384);
 
 
             ctx.font = "bold 48px sans-serif";
 
-           
-            ctx.fillStyle =color;
+
+            ctx.fillStyle = color;
             ctx.strokeStyle = "#ffffff";
             ctx.lineWidth = 4;
             ctx.strokeText(t.text.zh, 50, 128);
             ctx.fillText(t.text.zh, 50, 128);
 
 
-            
+
 
             ctx.font = "bold 28px sans-serif";
             ctx.fillStyle = color;
@@ -653,8 +695,8 @@
 
             ctx.fillRect(50, canvas.height - 80, 10, 10);
 
-            ctx.fillStyle ='rgba(255,255,255,0.7)';
-            ctx.fillRect(0,canvas.height-90,canvas.width,384);
+            ctx.fillStyle = 'rgba(255,255,255,0.7)';
+            ctx.fillRect(0, canvas.height - 90, canvas.width, 384);
 
 
             ctx.font = "bold 16px sans-serif";
@@ -671,17 +713,17 @@
             ctx.strokeStyle = "#ffffff";
             ctx.lineWidth = 4;
 
-            
+
             var tw2 = ctx.measureText(name).width;
- 
 
-            ctx.fillStyle ='black';
-            ctx.strokeText(name,70, canvas.height - 40);
-            ctx.fillText(name,70, canvas.height - 40);
 
-            ctx.fillStyle =c[0];
-            ctx.fillRect(0,canvas.height -35,tw2-20,10);
-            ctx.fillRect(90+tw2,canvas.height -35,canvas.width,10);
+            ctx.fillStyle = 'black';
+            ctx.strokeText(name, 70, canvas.height - 40);
+            ctx.fillText(name, 70, canvas.height - 40);
+
+            ctx.fillStyle = c[0];
+            ctx.fillRect(0, canvas.height - 35, tw2 - 20, 10);
+            ctx.fillRect(90 + tw2, canvas.height - 35, canvas.width, 10);
 
             var imgSrc = canvas.toDataURL();
             //alert(imgSrc)
@@ -694,8 +736,8 @@
 
                 document.querySelector('#bookCover').setAttribute('src', '#cover');
                 isDone = isDone + 1;
-                //   document.body.innerHTML='';
-                //  document.body.appendChild(img)
+                //document.body.innerHTML='';
+                // document.body.appendChild(img)
             };
 
 
@@ -742,8 +784,8 @@
 
             };
 
-            ctx.fillStyle =c[0];
-            ctx.fillRect(0,canvas.height -35,300,10);
+            ctx.fillStyle = c[0];
+            ctx.fillRect(0, canvas.height - 35, 300, 10);
 
             var imgSrc = canvas.toDataURL();
             var img = document.querySelector('#cover_small');
