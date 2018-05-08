@@ -570,9 +570,9 @@
             var logo=document.querySelector('#logo');
 
             var size=w*0.25;
-            var y=h-size-10;
+            var y=h-size-20;
 
-            nc.drawImage(logo,10,y, size,size);  
+            nc.drawImage(logo,w/2-size/2,y, size,size);  
             
             var base64=cc.toDataURL('image/png');
 
