@@ -552,39 +552,35 @@
 
 
         function save() {
-            var s = document.querySelector('a-scene').components.screenshot
-            s.data.height = window.innerHeight;
-            s.data.width = window.innerWidth;
+            var s = document.querySelector('a-scene').components.screenshot;
+            var w=window.innerWidth*2,h=window.innerHeight*2;
+            s.data.height = h;
+            s.data.width =w;
 
             var c=s.getCanvas('perspective');
            
 
             var cc=document.createElement('canvas');
             var nc=cc.getContext('2d');
-            cc.width= window.innerWidth;
-            cc.height=window.innerHeight;
+            cc.width= w;
+            cc.height=h;
 
             nc.drawImage(c,0,0);
-
-            nc.drawImage(c,0,0);
-
 
             var logo=document.querySelector('#logo');
 
-            var size=window.innerWidth*0.25;
-            var y=window.innerHeight-size-10;
+            var size=w*0.25;
+            var y=h-size-10;
 
-            nc.drawImage(logo,10,y, window.innerWidth*0.25, window.innerWidth*0.25);  
+            nc.drawImage(logo,10,y, size,size);  
             
             var base64=cc.toDataURL('image/png');
 
             var img=document.createElement('img');
-
-
-
+            img.style.width="100%";
             img.onload=function(){
                 document.body.innerHTML='';
-            document.body.appendChild(img);
+                document.body.appendChild(img);
             }
             img.src=base64;
 
